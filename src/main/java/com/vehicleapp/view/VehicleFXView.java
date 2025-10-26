@@ -1,12 +1,10 @@
 package com.vehicleapp.view;
 
 import com.google.inject.Inject;
-import com.vehicleapp.Main;
 import com.vehicleapp.controller.VehicleController;
 import com.vehicleapp.model.Vehicle;
 import java.util.List;
 import java.util.Optional;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -20,16 +18,12 @@ import lombok.NoArgsConstructor;
  * displays data, and coordinates with the controller.
  */
 @NoArgsConstructor
-public class VehicleFXView extends Application {
+public class VehicleFXView {
   private Stage primaryStage;
   private TextArea outputArea;
   @Inject private VehicleController controller;
 
-  @Override
-  public void start(Stage stage) {
-    // Initialize dependencies via injector from Main
-    Main.getInjector().injectMembers(this);
-
+  public void initializeUI(Stage stage) {
     this.primaryStage = stage;
     primaryStage.setTitle("JavaFX Vehicle Inventory Management System");
 
@@ -320,9 +314,5 @@ public class VehicleFXView extends Application {
         });
 
     return showDialog("Update Vehicle", "Update vehicle details", dialog).orElse(existing);
-  }
-
-  public static void launchApp(String[] args) {
-    Application.launch(VehicleFXView.class, args);
   }
 }
