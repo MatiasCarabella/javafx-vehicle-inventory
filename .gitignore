@@ -1,0 +1,5 @@
+/.vscode
+/bin
+/build
+vehicledb.mv.db
+vehicledb.trace.db

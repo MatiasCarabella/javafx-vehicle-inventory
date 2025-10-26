@@ -1,0 +1,77 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'com.diffplug.spotless' version '8.0.0'
+    id 'com.github.ben-manes.versions' version '0.53.0'
+}
+
+javafx {
+    version = '21'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+group 'com.vehicleapp'
+version '1.0-SNAPSHOT'
+
+ext {
+    h2Version = '2.4.240'
+    lombokVersion = '1.18.42'
+    junitJupiterVersion = '6.0.0'
+    googleJavaFormatVersion = '1.25.0'
+    guiceVersion = '7.0.0'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // H2 Database
+    implementation "com.h2database:h2:${h2Version}"
+    
+    // Lombok
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    
+    // Dependencies will be managed by the JavaFX plugin
+    
+    // JUnit Jupiter for testing
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
+    
+    // For testing with Lombok
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    
+        // Guice for dependency injection
+        implementation "com.google.inject:guice:${guiceVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'com.vehicleapp.Main'
+}
+
+run {
+    jvmArgs = [
+        '--module-path', classpath.asPath,
+        '--add-modules', 'javafx.controls,javafx.fxml'
+    ]
+}
+
+// Spotless code style/formatting configuration
+spotless {
+    java {
+        target 'src/main/java/**/*.java', 'src/test/java/**/*.java'
+        googleJavaFormat(googleJavaFormatVersion)
+    }
+}
