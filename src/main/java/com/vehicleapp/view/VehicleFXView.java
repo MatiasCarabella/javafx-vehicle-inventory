@@ -253,7 +253,7 @@ public class VehicleFXView {
         });
   }
 
-  public Vehicle getUpdateVehicleInput(final Vehicle existing) {
+  public Vehicle getUpdateVehicleInput(Vehicle existing) {
     final Dialog<Vehicle> dialog = new Dialog<>();
     dialog.setTitle("Update Vehicle");
     dialog.setHeaderText("Update vehicle details");

@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class VehicleController {
   private final VehicleService service;
 
-  public Vehicle addVehicle(final Vehicle vehicle) {
+  public Vehicle addVehicle(Vehicle vehicle) {
     try {
       return service.createVehicle(vehicle);
     } catch (Exception e) {
@@ -31,7 +31,7 @@ public class VehicleController {
     }
   }
 
-  public Optional<Vehicle> findVehicle(final Long id) {
+  public Optional<Vehicle> findVehicle(Long id) {
     try {
       return service.getVehicle(id);
     } catch (Exception e) {
@@ -39,7 +39,7 @@ public class VehicleController {
     }
   }
 
-  public Vehicle updateVehicle(final Vehicle vehicle) {
+  public Vehicle updateVehicle(Vehicle vehicle) {
     try {
       service.updateVehicle(vehicle);
       return vehicle;
@@ -48,7 +48,7 @@ public class VehicleController {
     }
   }
 
-  public void deleteVehicle(final Long id) {
+  public void deleteVehicle(Long id) {
     try {
       service.deleteVehicle(id);
     } catch (Exception e) {

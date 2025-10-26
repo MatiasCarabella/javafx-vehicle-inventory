@@ -59,6 +59,10 @@ test {
 
 application {
     mainClass = 'com.vehicleapp.Main'
+    applicationDefaultJvmArgs = [
+        '--module-path', 'APP_HOME_MARKER/lib',
+        '--add-modules', 'javafx.controls,javafx.fxml'
+    ]
 }
 
 run {
@@ -66,6 +70,38 @@ run {
         '--module-path', classpath.asPath,
         '--add-modules', 'javafx.controls,javafx.fxml'
     ]
+}
+
+// Configure the distribution
+distributions {
+    main {
+        contents {
+            into('db') {
+                from('vehicledb.mv.db') {
+                    // Include if exists, don't fail if missing
+                    includeEmptyDirs = true
+                }
+            }
+        }
+    }
+}
+
+// Modify the start scripts to use the correct module path
+tasks.withType(CreateStartScripts).configureEach { task ->
+    task.doLast {
+        def windowsScriptFile = new File(task.outputDir, task.applicationName + '.bat')
+        def unixScriptFile = new File(task.outputDir, task.applicationName)
+        
+        String windowsContent = windowsScriptFile.text
+        String unixContent = unixScriptFile.text
+        
+        // Replace APP_HOME_MARKER with actual app home variable
+        windowsContent = windowsContent.replace('APP_HOME_MARKER', '%APP_HOME%')
+        unixContent = unixContent.replace('APP_HOME_MARKER', '$APP_HOME')
+        
+        windowsScriptFile.text = windowsContent
+        unixScriptFile.text = unixContent
+    }
 }
 
 // Spotless code style/formatting configuration

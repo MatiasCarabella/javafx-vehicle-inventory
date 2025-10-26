@@ -77,6 +77,25 @@ The project uses Google Java Format through the Spotless plugin. To maintain con
 ./gradlew spotlessApply
 ```
 
+### Creating an Executable
+
+You can create a standalone executable distribution of the application using Gradle:
+
+```bash
+# Create distribution packages
+./gradlew assembleDist
+
+# The distributions will be available in:
+# build/distributions/inventory-app.zip
+# build/distributions/inventory-app.tar
+```
+
+To run the application after extracting the distribution:
+- Windows: `bin/inventory-app.bat`
+- Linux/Mac: `bin/inventory-app`
+
+The executable includes all required dependencies and can be distributed to users who don't have Gradle or the source code installed.
+
 ### Project Setup
 
 The application uses Gradle for build management and includes several plugins:
