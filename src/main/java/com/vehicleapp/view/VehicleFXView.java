@@ -1,9 +1,9 @@
 package com.vehicleapp.view;
 
+import com.google.inject.Inject;
+import com.vehicleapp.Main;
 import com.vehicleapp.controller.VehicleController;
 import com.vehicleapp.model.Vehicle;
-import com.vehicleapp.service.VehicleService;
-import com.vehicleapp.util.InjectorHolder;
 import java.util.List;
 import java.util.Optional;
 import javafx.application.Application;
@@ -13,20 +13,25 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import lombok.NoArgsConstructor;
 
+/**
+ * JavaFX view component providing the user interface for vehicle management. Handles user input,
+ * displays data, and coordinates with the controller.
+ */
+@NoArgsConstructor
 public class VehicleFXView extends Application {
   private Stage primaryStage;
   private TextArea outputArea;
-  private VehicleController controller;
+  @Inject private VehicleController controller;
 
   @Override
   public void start(Stage stage) {
-    this.primaryStage = stage;
-    primaryStage.setTitle("Vehicle Management System");
+    // Initialize dependencies via injector from Main
+    Main.getInjector().injectMembers(this);
 
-    // Initialize application components via Guice
-    VehicleService service = InjectorHolder.getInjector().getInstance(VehicleService.class);
-    this.controller = new VehicleController(service, this);
+    this.primaryStage = stage;
+    primaryStage.setTitle("JavaFX Vehicle Inventory Management System");
 
     // Create main layout
     final BorderPane mainLayout = new BorderPane();
@@ -38,27 +43,95 @@ public class VehicleFXView extends Application {
     // Add vehicle button
     final Button addButton = new Button("Add new vehicle");
     addButton.setMaxWidth(Double.MAX_VALUE);
-    addButton.setOnAction(e -> controller.addVehicle());
+    addButton.setOnAction(
+        e -> {
+          try {
+            Vehicle vehicle = getVehicleInput();
+            if (vehicle != null) {
+              Vehicle saved = controller.addVehicle(vehicle);
+              displayMessage("Vehicle added successfully with ID: " + saved.getId());
+            }
+          } catch (Exception ex) {
+            displayMessage(ex.getMessage());
+          }
+        });
 
     // List vehicles button
     final Button listButton = new Button("List all vehicles");
     listButton.setMaxWidth(Double.MAX_VALUE);
-    listButton.setOnAction(e -> controller.listVehicles());
+    listButton.setOnAction(
+        e -> {
+          try {
+            displayVehicles(controller.listVehicles());
+          } catch (Exception ex) {
+            displayMessage(ex.getMessage());
+          }
+        });
 
     // Find vehicle button
     final Button findButton = new Button("Find vehicle by ID");
     findButton.setMaxWidth(Double.MAX_VALUE);
-    findButton.setOnAction(e -> controller.findVehicle());
+    findButton.setOnAction(
+        e -> {
+          try {
+            Long id = getVehicleId();
+            if (id != null) {
+              controller
+                  .findVehicle(id)
+                  .ifPresentOrElse(
+                      this::displayVehicle, () -> displayMessage("Vehicle not found."));
+            }
+          } catch (Exception ex) {
+            displayMessage(ex.getMessage());
+          }
+        });
 
     // Update vehicle button
     final Button updateButton = new Button("Update vehicle");
     updateButton.setMaxWidth(Double.MAX_VALUE);
-    updateButton.setOnAction(e -> controller.updateVehicle());
+    updateButton.setOnAction(
+        e -> {
+          try {
+            Long id = getVehicleId();
+            if (id != null) {
+              controller
+                  .findVehicle(id)
+                  .ifPresentOrElse(
+                      existing -> {
+                        Vehicle updated = getUpdateVehicleInput(existing);
+                        if (updated != null) {
+                          controller.updateVehicle(updated);
+                          displayMessage("Vehicle updated successfully.");
+                        }
+                      },
+                      () -> displayMessage("Vehicle not found."));
+            }
+          } catch (Exception ex) {
+            displayMessage(ex.getMessage());
+          }
+        });
 
     // Delete vehicle button
     final Button deleteButton = new Button("Delete vehicle");
     deleteButton.setMaxWidth(Double.MAX_VALUE);
-    deleteButton.setOnAction(e -> controller.deleteVehicle());
+    deleteButton.setOnAction(
+        e -> {
+          try {
+            Long id = getVehicleId();
+            if (id != null) {
+              controller
+                  .findVehicle(id)
+                  .ifPresentOrElse(
+                      v -> {
+                        controller.deleteVehicle(id);
+                        displayMessage("Vehicle deleted successfully.");
+                      },
+                      () -> displayMessage("Vehicle not found."));
+            }
+          } catch (Exception ex) {
+            displayMessage(ex.getMessage());
+          }
+        });
 
     // Exit button
     final Button exitButton = new Button("Exit");
@@ -89,19 +162,19 @@ public class VehicleFXView extends Application {
   }
 
   public Vehicle getVehicleInput() {
-    Dialog<Vehicle> dialog = new Dialog<>();
+    final Dialog<Vehicle> dialog = new Dialog<>();
     dialog.setTitle("Add Vehicle");
     dialog.setHeaderText("Enter vehicle details");
 
     // Create fields
-    TextField makeField = new TextField();
-    TextField modelField = new TextField();
-    TextField yearField = new TextField();
-    TextField colorField = new TextField();
-    TextField priceField = new TextField();
+    final TextField makeField = new TextField();
+    final TextField modelField = new TextField();
+    final TextField yearField = new TextField();
+    final TextField colorField = new TextField();
+    final TextField priceField = new TextField();
 
     // Create layout
-    GridPane grid = new GridPane();
+    final GridPane grid = new GridPane();
     grid.setHgap(10);
     grid.setVgap(10);
     grid.setPadding(new Insets(20, 150, 10, 10));
@@ -186,20 +259,20 @@ public class VehicleFXView extends Application {
         });
   }
 
-  public Vehicle getUpdateVehicleInput(Vehicle existing) {
-    Dialog<Vehicle> dialog = new Dialog<>();
+  public Vehicle getUpdateVehicleInput(final Vehicle existing) {
+    final Dialog<Vehicle> dialog = new Dialog<>();
     dialog.setTitle("Update Vehicle");
     dialog.setHeaderText("Update vehicle details");
 
     // Create fields
-    TextField makeField = new TextField(existing.getMake());
-    TextField modelField = new TextField(existing.getModel());
-    TextField yearField = new TextField(String.valueOf(existing.getYear()));
-    TextField colorField = new TextField(existing.getColor());
-    TextField priceField = new TextField(String.valueOf(existing.getPrice()));
+    final TextField makeField = new TextField(existing.getMake());
+    final TextField modelField = new TextField(existing.getModel());
+    final TextField yearField = new TextField(String.valueOf(existing.getYear()));
+    final TextField colorField = new TextField(existing.getColor());
+    final TextField priceField = new TextField(String.valueOf(existing.getPrice()));
 
     // Create layout
-    GridPane grid = new GridPane();
+    final GridPane grid = new GridPane();
     grid.setHgap(10);
     grid.setVgap(10);
     grid.setPadding(new Insets(20, 150, 10, 10));
@@ -249,7 +322,7 @@ public class VehicleFXView extends Application {
     return showDialog("Update Vehicle", "Update vehicle details", dialog).orElse(existing);
   }
 
-  public static void launchApp() {
-    Application.launch(VehicleFXView.class);
+  public static void launchApp(String[] args) {
+    Application.launch(VehicleFXView.class, args);
   }
 }

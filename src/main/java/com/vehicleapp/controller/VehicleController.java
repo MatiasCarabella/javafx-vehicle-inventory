@@ -1,75 +1,58 @@
 package com.vehicleapp.controller;
 
+import com.google.inject.Inject;
 import com.vehicleapp.model.Vehicle;
 import com.vehicleapp.service.VehicleService;
-import com.vehicleapp.view.VehicleFXView;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+/**
+ * Controller component handling vehicle-related operations. Acts as a bridge between the view and
+ * service layer, providing error handling and data transformation.
+ */
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class VehicleController {
   private final VehicleService service;
-  private final VehicleFXView view;
 
-  public void addVehicle() {
+  public Vehicle addVehicle(final Vehicle vehicle) {
     try {
-      final Vehicle vehicle = view.getVehicleInput();
-      final Vehicle saved = service.createVehicle(vehicle);
-      view.displayMessage("Vehicle added successfully with ID: " + saved.getId());
+      return service.createVehicle(vehicle);
     } catch (Exception e) {
-      view.displayMessage("Error adding vehicle: " + e.getMessage());
+      throw new RuntimeException("Error adding vehicle: " + e.getMessage(), e);
     }
   }
 
-  public void listVehicles() {
+  public List<Vehicle> listVehicles() {
     try {
-      view.displayVehicles(service.getAllVehicles());
+      return service.getAllVehicles();
     } catch (Exception e) {
-      view.displayMessage("Error fetching vehicles: " + e.getMessage());
+      throw new RuntimeException("Error fetching vehicles: " + e.getMessage(), e);
     }
   }
 
-  public void findVehicle() {
+  public Optional<Vehicle> findVehicle(final Long id) {
     try {
-      final Long id = view.getVehicleId();
-      final Optional<Vehicle> vehicle = service.getVehicle(id);
-      if (vehicle.isPresent()) {
-        view.displayVehicle(vehicle.get());
-      } else {
-        view.displayMessage("Vehicle not found.");
-      }
+      return service.getVehicle(id);
     } catch (Exception e) {
-      view.displayMessage("Error finding vehicle: " + e.getMessage());
+      throw new RuntimeException("Error finding vehicle: " + e.getMessage(), e);
     }
   }
 
-  public void updateVehicle() {
+  public Vehicle updateVehicle(final Vehicle vehicle) {
     try {
-      final Long id = view.getVehicleId();
-      final Optional<Vehicle> existingVehicle = service.getVehicle(id);
-      if (existingVehicle.isPresent()) {
-        final Vehicle updated = view.getUpdateVehicleInput(existingVehicle.get());
-        service.updateVehicle(updated);
-        view.displayMessage("Vehicle updated successfully.");
-      } else {
-        view.displayMessage("Vehicle not found.");
-      }
+      service.updateVehicle(vehicle);
+      return vehicle;
     } catch (Exception e) {
-      view.displayMessage("Error updating vehicle: " + e.getMessage());
+      throw new RuntimeException("Error updating vehicle: " + e.getMessage(), e);
     }
   }
 
-  public void deleteVehicle() {
+  public void deleteVehicle(final Long id) {
     try {
-      final Long id = view.getVehicleId();
-      if (service.getVehicle(id).isPresent()) {
-        service.deleteVehicle(id);
-        view.displayMessage("Vehicle deleted successfully.");
-      } else {
-        view.displayMessage("Vehicle not found.");
-      }
+      service.deleteVehicle(id);
     } catch (Exception e) {
-      view.displayMessage("Error deleting vehicle: " + e.getMessage());
+      throw new RuntimeException("Error deleting vehicle: " + e.getMessage(), e);
     }
   }
 }

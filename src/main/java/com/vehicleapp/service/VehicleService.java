@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Service layer handling business logic for vehicle operations. Provides data validation and
+ * coordinates with the repository layer.
+ */
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class VehicleService {
   private final VehicleRepository repository;

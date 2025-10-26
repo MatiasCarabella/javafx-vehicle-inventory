@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository layer handling data persistence for vehicles using H2 database. Provides CRUD
+ * operations and manages database connections.
+ */
 public class VehicleRepository {
   private static final String DB_URL = "jdbc:h2:./vehicledb;DB_CLOSE_DELAY=-1";
   private static final String DB_USER = "sa";
@@ -46,13 +50,14 @@ public class VehicleRepository {
   }
 
   public Vehicle save(Vehicle vehicle) {
-    String sql =
+    final String sql =
         vehicle.getId() == null
             ? "INSERT INTO vehicles (make, model, manufacture_year, color, price) VALUES (?, ?, ?, ?, ?)"
             : "UPDATE vehicles SET make=?, model=?, manufacture_year=?, color=?, price=? WHERE id=?";
 
-    try (Connection conn = getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    try (final Connection conn = getConnection();
+        final PreparedStatement stmt =
+            conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
       stmt.setString(1, vehicle.getMake());
       stmt.setString(2, vehicle.getModel());
@@ -81,11 +86,12 @@ public class VehicleRepository {
   }
 
   public Optional<Vehicle> findById(Long id) {
-    try (Connection conn = getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM vehicles WHERE id = ?")) {
+    try (final Connection conn = getConnection();
+        final PreparedStatement stmt =
+            conn.prepareStatement("SELECT * FROM vehicles WHERE id = ?")) {
 
       stmt.setLong(1, id);
-      ResultSet rs = stmt.executeQuery();
+      final ResultSet rs = stmt.executeQuery();
 
       if (rs.next()) {
         return Optional.of(mapResultSetToVehicle(rs));
@@ -112,8 +118,8 @@ public class VehicleRepository {
   }
 
   public void deleteById(Long id) {
-    try (Connection conn = getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM vehicles WHERE id = ?")) {
+    try (final Connection conn = getConnection();
+        final PreparedStatement stmt = conn.prepareStatement("DELETE FROM vehicles WHERE id = ?")) {
 
       stmt.setLong(1, id);
       stmt.executeUpdate();
