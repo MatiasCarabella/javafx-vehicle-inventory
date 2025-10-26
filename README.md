@@ -1,4 +1,20 @@
-# Vehicle Management System
+<div id="user-content-toc">
+  <ul align="center" style="list-style: none;">
+    <summary>
+      <h1 align="center">JavaFX Vehicle Inventory</h1>
+    </summary>
+  </ul>
+</div>
+<div align="center">
+  <a href="https://www.oracle.com/java/" target="_blank"><img src="https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white" alt="Java 21" /></a>
+  <a href="https://openjfx.io/" target="_blank"><img src="https://img.shields.io/badge/JavaFX-21-007396?logo=java&logoColor=white" alt="JavaFX 21" /></a>
+  <a href="https://gradle.org/" target="_blank"><img src="https://img.shields.io/badge/Gradle-8.x-02303A?logo=gradle&logoColor=white" alt="Gradle" /></a>
+  <a href="https://www.h2database.com/" target="_blank"><img src="https://img.shields.io/badge/H2-2.4.240-blue?logo=database&logoColor=white" alt="H2 Database" /></a>
+  <a href="https://projectlombok.org/" target="_blank"><img src="https://img.shields.io/badge/Lombok-1.18.42-BC4521?logo=lombok&logoColor=white" alt="Project Lombok" /></a>
+  <a href="https://github.com/google/guice" target="_blank"><img src="https://img.shields.io/badge/Guice-7.0.0-4285F4?logo=google&logoColor=white" alt="Google Guice" /></a>
+  <a href="https://junit.org/junit5/" target="_blank"><img src="https://img.shields.io/badge/JUnit-6.0.0-25A162?logo=junit5&logoColor=white" alt="JUnit Jupiter" /></a>
+</div>
+<h1></h1>
 
 A simple CRUD application for managing vehicles using JavaFX, Guice, and H2 database.
 
