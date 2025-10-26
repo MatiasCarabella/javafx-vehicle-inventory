@@ -1,5 +1,6 @@
 /.vscode
 /bin
 /build
+/gradle
 vehicledb.mv.db
 vehicledb.trace.db
