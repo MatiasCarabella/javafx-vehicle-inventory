@@ -1,19 +1,17 @@
-<div id="user-content-toc">
-  <ul align="center" style="list-style: none;">
-    <summary>
-      <h1 align="center">JavaFX Vehicle Inventory</h1>
-    </summary>
-  </ul>
-</div>
 
 <div align="center">
+
+# JavaFX Vehicle Inventory
+  
   <a href="https://www.oracle.com/java/" target="_blank"><img src="https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white" alt="Java 21" /></a>
   <a href="https://openjfx.io/" target="_blank"><img src="https://img.shields.io/badge/JavaFX-21-007396?logo=java&logoColor=white" alt="JavaFX 21" /></a>
   <a href="https://gradle.org/" target="_blank"><img src="https://img.shields.io/badge/Gradle-9.x-02303A?logo=gradle&logoColor=white" alt="Gradle" /></a>
   <a href="https://www.h2database.com/" target="_blank"><img src="https://img.shields.io/badge/H2-2.4.240-blue?logo=database&logoColor=white" alt="H2 Database" /></a>
-</div>
+
 
 A modern vehicle inventory management system built with Java 21 and JavaFX 21 WebView. Features a web-based interface using HTML, CSS, and JavaScript, backed by a robust Java architecture with Guice dependency injection and H2 database persistence.
+
+</div>
 
 <img width="1489" height="898" alt="image" src="https://github.com/user-attachments/assets/0d9a8802-c348-4718-ab2e-c2bbb48990ad" />
 
@@ -66,16 +64,6 @@ src/main/
     └── app.js                       # Frontend logic and interactivity
 ```
 
-## Architecture
-
-Clean architecture with modern web-based frontend:
-
-- **View**: JavaFX WebView rendering HTML/CSS/JS interface
-- **Controller**: Coordinates between view and service layers
-- **Service**: Business logic and data validation
-- **Repository**: Data persistence with H2 database
-- **DI**: Guice manages component lifecycle
-
 ### Tech Stack
 
 - **Backend**: Java 21, JavaFX 21 WebView, Guice 7.0, H2 Database 2.4
@@ -89,7 +77,6 @@ Clean architecture with modern web-based frontend:
 The project uses Google Java Format via Spotless:
 
 ```bash
-./gradlew spotlessCheck    # Check formatting
 ./gradlew spotlessApply    # Apply formatting
 ```
 
@@ -107,17 +94,6 @@ Run the extracted distribution:
 - Windows: `bin/inventory-app.bat`
 - Linux/Mac: `bin/inventory-app`
 
-## Usage
+## License
 
-### Dashboard
-- View real-time statistics (total vehicles and inventory value)
-- Search vehicles instantly by make, model, color, or year
-- Click "Add Vehicle" to create new entries
-
-### Vehicle Management
-- **Add**: Click "Add Vehicle", fill the form, and save
-- **Edit**: Click the edit icon on any vehicle card
-- **Delete**: Click the delete icon and confirm
-- **Search**: Type in the search bar for instant filtering
-
-All operations provide instant feedback with toast notifications and smooth animations.
+This project is licensed under the [MIT License](LICENSE).
