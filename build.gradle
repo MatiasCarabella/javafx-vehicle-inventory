@@ -2,13 +2,13 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
-    id 'com.diffplug.spotless' version '8.0.0'
+    id 'com.diffplug.spotless' version '8.1.0'
     id 'com.github.ben-manes.versions' version '0.53.0'
 }
 
 javafx {
     version = '21'
-    modules = ['javafx.controls', 'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web']
 }
 
 group 'com.vehicleapp'
@@ -20,6 +20,7 @@ ext {
     junitJupiterVersion = '6.0.0'
     googleJavaFormatVersion = '1.25.0'
     guiceVersion = '7.0.0'
+    jacksonVersion = '2.18.2'
 }
 
 java {
@@ -49,8 +50,11 @@ dependencies {
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     
-        // Guice for dependency injection
-        implementation "com.google.inject:guice:${guiceVersion}"
+    // Guice for dependency injection
+    implementation "com.google.inject:guice:${guiceVersion}"
+    
+    // Jackson for JSON processing
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
 }
 
 test {
@@ -61,14 +65,14 @@ application {
     mainClass = 'com.vehicleapp.Main'
     applicationDefaultJvmArgs = [
         '--module-path', 'APP_HOME_MARKER/lib',
-        '--add-modules', 'javafx.controls,javafx.fxml'
+        '--add-modules', 'javafx.controls,javafx.fxml,javafx.web'
     ]
 }
 
 run {
     jvmArgs = [
         '--module-path', classpath.asPath,
-        '--add-modules', 'javafx.controls,javafx.fxml'
+        '--add-modules', 'javafx.controls,javafx.fxml,javafx.web'
     ]
 }
 

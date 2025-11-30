@@ -5,7 +5,7 @@ import com.google.inject.Scopes;
 import com.vehicleapp.controller.VehicleController;
 import com.vehicleapp.repository.VehicleRepository;
 import com.vehicleapp.service.VehicleService;
-import com.vehicleapp.view.VehicleFXView;
+import com.vehicleapp.view.VehicleWebView;
 
 /**
  * Guice module configuration for dependency injection. Configures all application components as
@@ -18,6 +18,6 @@ public class AppModule extends AbstractModule {
     bind(VehicleRepository.class).in(Scopes.SINGLETON);
     bind(VehicleService.class).in(Scopes.SINGLETON);
     bind(VehicleController.class).in(Scopes.SINGLETON);
-    bind(VehicleFXView.class).in(Scopes.SINGLETON);
+    bind(VehicleWebView.class).in(Scopes.SINGLETON);
   }
 }

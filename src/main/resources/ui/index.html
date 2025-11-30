@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Inventory Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 17h14v-5l-1.5-4.5h-11L5 12v5z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="7.5" cy="17.5" r="1.5" fill="currentColor"/>
+                        <circle cx="16.5" cy="17.5" r="1.5" fill="currentColor"/>
+                    </svg>
+                    Vehicle Inventory
+                </h1>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Stats -->
+            <div class="dashboard">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M5 17h14v-5l-1.5-4.5h-11L5 12v5z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="7.5" cy="17.5" r="1.5" fill="currentColor"/>
+                            <circle cx="16.5" cy="17.5" r="1.5" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-label">Total Vehicles</span>
+                        <span class="stat-value" id="totalVehicles">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="12" y1="1" x2="12" y2="23" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-label">Total Value</span>
+                        <span class="stat-value" id="totalValue">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="11" cy="11" r="8" stroke-width="2"/>
+                        <path d="M21 21l-4.35-4.35" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Search vehicles..." class="search-input">
+                </div>
+                <button class="btn btn-primary" onclick="showAddVehicleModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 5v14M5 12h14" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Add Vehicle
+                </button>
+            </div>
+
+            <!-- Vehicles Grid -->
+            <div class="vehicles-grid" id="vehiclesGrid">
+                <!-- Vehicle cards will be inserted here -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState">
+                <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M5 17h14v-5l-1.5-4.5h-11L5 12v5z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="7.5" cy="17.5" r="1.5"/>
+                    <circle cx="16.5" cy="17.5" r="1.5"/>
+                </svg>
+                <h2>No vehicles yet</h2>
+                <p>Get started by adding your first vehicle to the inventory</p>
+                <button class="btn btn-primary" onclick="showAddVehicleModal()">Add Your First Vehicle</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Vehicle Modal -->
+    <div class="modal" id="vehicleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Vehicle</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="vehicleForm" onsubmit="handleSubmit(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="make">Make</label>
+                        <input type="text" id="make" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="model">Model</label>
+                        <input type="text" id="model" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="number" id="year" min="1900" max="2100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="color">Color</label>
+                        <input type="text" id="color" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="price">Price ($)</label>
+                        <input type="number" id="price" step="0.01" min="0" required>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Vehicle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content confirm-dialog">
+            <div class="modal-header">
+                <h2>Confirm Delete</h2>
+            </div>
+            <div class="confirm-body">
+                <p>Are you sure you want to delete this vehicle?</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeConfirm()">Cancel</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

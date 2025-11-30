@@ -3,6 +3,7 @@ package com.vehicleapp.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Represents a vehicle entity with its basic attributes. Uses Lombok for getter/setter/builder
@@ -10,6 +11,7 @@ import lombok.Data;
  */
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class Vehicle {
   private Long id;

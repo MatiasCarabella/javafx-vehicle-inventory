@@ -5,127 +5,123 @@
     </summary>
   </ul>
 </div>
+
 <div align="center">
   <a href="https://www.oracle.com/java/" target="_blank"><img src="https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white" alt="Java 21" /></a>
   <a href="https://openjfx.io/" target="_blank"><img src="https://img.shields.io/badge/JavaFX-21-007396?logo=java&logoColor=white" alt="JavaFX 21" /></a>
-  <a href="https://gradle.org/" target="_blank"><img src="https://img.shields.io/badge/Gradle-8.x-02303A?logo=gradle&logoColor=white" alt="Gradle" /></a>
+  <a href="https://gradle.org/" target="_blank"><img src="https://img.shields.io/badge/Gradle-9.x-02303A?logo=gradle&logoColor=white" alt="Gradle" /></a>
   <a href="https://www.h2database.com/" target="_blank"><img src="https://img.shields.io/badge/H2-2.4.240-blue?logo=database&logoColor=white" alt="H2 Database" /></a>
 </div>
-<h1></h1>
 
-A simple CRUD application for managing vehicles using JavaFX, Guice, and H2 database.
+<p align="center">A modern CRUD application for managing vehicles with a sleek web-based UI powered by JavaFX WebView, featuring HTML/CSS/JS frontend with Java backend.</p>
+
+## Screenshot
+
+![Vehicle Inventory App Screenshot](screenshot.png)
+
+> Place your screenshot as `screenshot.png` in the root directory
 
 ## Features
 
-- Add new vehicles
-- List all vehicles
-- Find vehicle by ID
-- Update vehicle details
-- Delete vehicles
-- Persistent H2 database storage
-- Dependency injection with Guice
-- Clean architecture with separation of concerns
+- 🎨 **Modern Web UI** - Beautiful, responsive interface with smooth animations and dark theme
+- 🚗 **Vehicle Management** - Add, edit, delete, and search vehicles with intuitive controls
+- 💾 **Persistent Storage** - H2 database with file-based persistence between sessions
+- 🔍 **Real-time Search** - Filter vehicles instantly by make, model, color, or year
+- 📊 **Dashboard Stats** - Live statistics showing total vehicles and inventory value
+- 🎯 **Clean Architecture** - SOLID principles with dependency injection via Guice
+- 🌉 **Java-JavaScript Bridge** - Seamless communication using window.status protocol
 
 ## Prerequisites
 
 - Java 21
 - Gradle
 
-## Building and Running the Project
+## Quick Start
 
-You can run the application using the Gradle wrapper (no Gradle installation required):
+Run the application using the Gradle wrapper (no Gradle installation required):
 
 ```bash
 ./gradlew run
 ```
 
-Or if you have Gradle installed:
-
-```bash
-gradle run
-```
-
-The application uses H2 database in file mode, storing data in `vehicledb.mv.db` in the project directory. This means your data persists between application runs.
+The application uses H2 database in file mode, storing data in `vehicledb.mv.db`. Your data persists between runs.
 
 ## Project Structure
 
 ```
-src/main/java/com/vehicleapp/
-├── Main.java                 # Application entry point
-├── config/
-│   └── AppModule.java       # Guice dependency configuration
-├── controller/
-│   └── VehicleController.java
-├── model/
-│   └── Vehicle.java
-├── repository/
-│   └── VehicleRepository.java
-├── service/
-│   └── VehicleService.java
-└── view/
-    └── VehicleFXView.java
+src/main/
+├── java/com/vehicleapp/
+│   ├── Main.java                    # Application entry point
+│   ├── config/
+│   │   └── AppModule.java          # Guice dependency injection config
+│   ├── controller/
+│   │   └── VehicleController.java  # Business logic coordinator
+│   ├── model/
+│   │   └── Vehicle.java            # Vehicle entity
+│   ├── repository/
+│   │   └── VehicleRepository.java  # Data persistence layer
+│   ├── service/
+│   │   └── VehicleService.java     # Business logic
+│   └── view/
+│       └── VehicleWebView.java     # Web-based UI with JavaFX WebView
+└── resources/ui/
+    ├── index.html                   # Web UI structure
+    ├── styles.css                   # Modern styling with animations
+    └── app.js                       # Frontend logic and interactivity
 ```
 
 ## Architecture
 
-The application follows a clean architecture pattern:
+Clean architecture with modern web-based frontend:
 
-- **View Layer**: JavaFX UI components handling user interaction
-- **Controller Layer**: Coordinates between view and service, handles errors
-- **Service Layer**: Business logic and data validation
-- **Repository Layer**: Data persistence using H2 database
-- **Dependency Injection**: Guice manages component lifecycle and dependencies
+- **View**: JavaFX WebView rendering HTML/CSS/JS interface
+- **Controller**: Coordinates between view and service layers
+- **Service**: Business logic and data validation
+- **Repository**: Data persistence with H2 database
+- **DI**: Guice manages component lifecycle
+
+### Tech Stack
+
+- **Backend**: Java 21, JavaFX 21 WebView, Guice 7.0, H2 Database 2.4
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Communication**: window.status protocol with JSON (Jackson 2.18)
 
 ## Development
 
-### Code Style
+### Code Formatting
 
-The project uses Google Java Format through the Spotless plugin. To maintain consistent code style:
+The project uses Google Java Format via Spotless:
 
 ```bash
-# Check code formatting
-./gradlew spotlessCheck
-
-# Apply code formatting
-./gradlew spotlessApply
+./gradlew spotlessCheck    # Check formatting
+./gradlew spotlessApply    # Apply formatting
 ```
 
-### Creating an Executable
+### Building Distribution
 
-You can create a standalone executable distribution of the application using Gradle:
+Create a standalone executable:
 
 ```bash
-# Create distribution packages
 ./gradlew assembleDist
-
-# The distributions will be available in:
-# build/distributions/inventory-app.zip
-# build/distributions/inventory-app.tar
 ```
 
-To run the application after extracting the distribution:
+Distributions are in `build/distributions/` as `.zip` and `.tar` files.
+
+Run the extracted distribution:
 - Windows: `bin/inventory-app.bat`
 - Linux/Mac: `bin/inventory-app`
 
-The executable includes all required dependencies and can be distributed to users who don't have Gradle or the source code installed.
-
-### Project Setup
-
-The application uses Gradle for build management and includes several plugins:
-
-- **JavaFX Plugin**: Manages JavaFX dependencies
-- **Spotless**: Code formatting with Google Java Format
-- **Versions Plugin**: Dependency version management
-
 ## Usage
 
-The application provides a modern JavaFX graphical interface with the following features:
+### Dashboard
+- View real-time statistics (total vehicles and inventory value)
+- Search vehicles instantly by make, model, color, or year
+- Click "Add Vehicle" to create new entries
 
-1. Add new vehicle - Opens a form to input vehicle details
-2. List all vehicles - Displays all vehicles in the system
-3. Find vehicle by ID - Search for a specific vehicle
-4. Update vehicle - Modify existing vehicle details
-5. Delete vehicle - Remove a vehicle from the system
-6. Exit - Close the application
+### Vehicle Management
+- **Add**: Click "Add Vehicle", fill the form, and save
+- **Edit**: Click the edit icon on any vehicle card
+- **Delete**: Click the delete icon and confirm
+- **Search**: Type in the search bar for instant filtering
 
-All operations are performed through an intuitive graphical interface with forms and dialogs.
+All operations provide instant feedback with toast notifications and smooth animations.
