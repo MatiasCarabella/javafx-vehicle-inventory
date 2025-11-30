@@ -13,13 +13,11 @@
   <a href="https://www.h2database.com/" target="_blank"><img src="https://img.shields.io/badge/H2-2.4.240-blue?logo=database&logoColor=white" alt="H2 Database" /></a>
 </div>
 
-<p align="center">A modern CRUD application for managing vehicles with a sleek web-based UI powered by JavaFX WebView, featuring HTML/CSS/JS frontend with Java backend.</p>
+<p align="center">A modern vehicle inventory management system built with Java 21 and JavaFX 21 WebView. Features a web-based interface using HTML, CSS, and JavaScript, backed by a robust Java architecture with Guice dependency injection and H2 database persistence.</p>
 
 ## Screenshot
 
-![Vehicle Inventory App Screenshot](screenshot.png)
-
-> Place your screenshot as `screenshot.png` in the root directory
+<img width="1489" height="898" alt="image" src="https://github.com/user-attachments/assets/0d9a8802-c348-4718-ab2e-c2bbb48990ad" />
 
 ## Features
 
